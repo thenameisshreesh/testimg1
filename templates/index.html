@@ -66,6 +66,11 @@
     <button type="submit">Submit</button>
 </form>
 
+{% if message %}
+<p style="color: green; font-weight: bold;">{{ message }}</p>
+{% endif %}
+
+
 <h2>Stored Profiles</h2>
 
 <div>
