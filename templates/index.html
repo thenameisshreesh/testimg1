@@ -71,7 +71,7 @@
 <div>
     {% for user in data %}
     <div class="card">
-        <img src="{{ url_for('static', filename='uploads/' ~ user.img) }}" alt="Profile">
+        <img src="{{ user.img }}" alt="Profile">
         <h4>{{ user.name }}</h4>
         <p>{{ user.email }}</p>
         <p>Roll: {{ user.roll }}</p>
