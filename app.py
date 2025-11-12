@@ -31,29 +31,25 @@ def index():
                 file_bytes = file.read()
 
                 # Upload to Supabase Storage (fix: wrap bytes properly)
-                res = supabase.storage.from_(BUCKET_NAME).upload(
-                    path=filename,
-                    file=file_bytes,
-                    file_options={"content-type": file.content_type}
+                supabase.storage.from_(BUCKET_NAME).upload(
+                    filename,
+                    file_bytes,
+                    {"content-type": file.content_type}
                 )
 
-                # If upload fails, log it
-                if hasattr(res, "error") and res.error:
-                    print("Upload error:", res.error)
-                    message = "❌ Upload failed!"
-                else:
+               
                     # Get public URL
-                    public_url = supabase.storage.from_(BUCKET_NAME).get_public_url(filename)
+                public_url = supabase.storage.from_(BUCKET_NAME).get_public_url(filename)
 
                     # Insert record into database
-                    supabase.table("profiles").insert({
-                        "name": name,
-                        "email": email,
-                        "roll": roll,
-                        "img": public_url
-                    }).execute()
+                supabase.table("profiles").insert({
+                    "name": name,
+                    "email": email,
+                    "roll": roll,
+                    "img": public_url
+                }).execute()
 
-                    message = "✅ Profile added successfully!"
+                message = "✅ Profile added successfully!"
 
         # Fetch all profiles
         response = supabase.table("profiles").select("*").execute()
