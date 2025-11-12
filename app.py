@@ -30,18 +30,17 @@ def index():
                 # Read file bytes
                 file_bytes = file.read()
 
-                # Upload to Supabase Storage (fix: wrap bytes properly)
+                # ✅ Upload to Supabase Storage inside 'profile_images' folder
                 supabase.storage.from_(BUCKET_NAME).upload(
-                    filename,
+                    f"profile_images/{filename}",
                     file_bytes,
                     {"content-type": file.content_type}
                 )
 
-               
-                    # Get public URL
-                public_url = supabase.storage.from_(BUCKET_NAME).get_public_url(filename)
+                # ✅ Get public URL
+                public_url = supabase.storage.from_(BUCKET_NAME).get_public_url(f"profile_images/{filename}")
 
-                    # Insert record into database
+                # ✅ Insert record into database
                 supabase.table("profiles").insert({
                     "name": name,
                     "email": email,
