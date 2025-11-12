@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #c9d6ff, #e2e2e2);
+            margin: 0;
+            padding: 40px;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            width: 350px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            background: #6a11cb;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2575fc;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            display: inline-block;
+            width: 200px;
+            text-align: center;
+            margin: 10px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Add Profile</h2>
+
+<form action="/" method="POST" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="Enter name" required>
+    <input type="email" name="email" placeholder="Enter email" required>
+    <input type="text" name="roll" placeholder="Enter roll no" required>
+    <input type="file" name="img" accept="image/*" required>
+    <button type="submit">Submit</button>
+</form>
+
+<h2>Stored Profiles</h2>
+
+<div>
+    {% for user in data %}
+    <div class="card">
+        <img src="{{ url_for('static', filename='uploads/' ~ user.img) }}" alt="Profile">
+        <h4>{{ user.name }}</h4>
+        <p>{{ user.email }}</p>
+        <p>Roll: {{ user.roll }}</p>
+    </div>
+    {% else %}
+    <p>No data yet!</p>
+    {% endfor %}
+</div>
+
+</body>
+</html>
